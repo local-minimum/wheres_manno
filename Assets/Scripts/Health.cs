@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class Health : MonoBehaviour {
 
@@ -10,6 +11,7 @@ public class Health : MonoBehaviour {
 	[SerializeField] float baseDeterioration;
 	[SerializeField] float stepDuration;
 
+	RigidbodyFirstPersonController fpsController;
 	Ailment[] ailments;
 	float health;
 	float deterioration;
@@ -18,15 +20,24 @@ public class Health : MonoBehaviour {
 
 	void Start() {
 		ailments = GetComponentsInChildren<Ailment>();
+		fpsController = GetComponentInChildren<RigidbodyFirstPersonController>();
 		Reset();
 	}
 
 	void Update() {
 		if (isWalking)
-			stepTime += Time.deltaTime;
+			updateStepTime();
 
 		if (hasStepped)
 			Step();
+	}
+
+	void updateStepTime() {
+		if (fpsController.Running)
+			stepTime += Time.deltaTime * 2f * fpsController.movementSettings.RunMultiplier;
+		else
+			stepTime += Time.deltaTime;
+
 	}
 
 	bool isWalking {
