@@ -51,4 +51,9 @@ public class Imposter : MonoBehaviour {
 		imposterLight.intensity = Mathf.Pow(Mathf.Sin(Time.timeSinceLevelLoad * lightFlashingFrequency), 2) * imposterLightMaxIntensity; 
 	}
 
+	void OnTriggerEnter(Collider other) {
+		if (other.tag == "Player")
+			Debug.Log("Found Active Imposter");
+	}
+
 }
