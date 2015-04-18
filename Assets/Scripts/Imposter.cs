@@ -9,7 +9,6 @@ public class Imposter : MonoBehaviour {
 	[SerializeField] float callOutSpacing;
 
 	AudioSource player;
-	MeshRenderer meshRenderer;
 	bool active = false;
 	
 	float imposterLightMaxIntensity;
@@ -21,7 +20,7 @@ public class Imposter : MonoBehaviour {
 	void Start () {
 		if (Imposter.story == null)
 			Imposter.story = GameObject.FindObjectOfType<Story>();
-		meshRenderer = GetComponent<MeshRenderer>();
+
 		active = Imposter.story.PlayIteration == activeIteration;
 		player = GetComponent<AudioSource>();
 		imposterLight = GetComponent<Light>();
@@ -31,9 +30,15 @@ public class Imposter : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (active) {
+			if (IsCallOutTime)
+				CallOut();
 
 			FlashLight();
 		}
+	}
+
+	void CallOut() {
+		player.PlayOneShot(story.ImposterVocalisation);
 	}
 
 	bool IsCallOutTime {
