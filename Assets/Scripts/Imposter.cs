@@ -34,7 +34,8 @@ public class Imposter : MonoBehaviour {
 				CallOut();
 
 			FlashLight();
-		}
+		} else
+			imposterLight.enabled = false;
 	}
 
 	void CallOut() {
