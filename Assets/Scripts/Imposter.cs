@@ -3,14 +3,19 @@ using System.Collections;
 
 public class Imposter : MonoBehaviour {
 
-	[SerializeField] Color imposterLight;
 	[SerializeField] static protected Story story;
 	[SerializeField] int activeIteration;
-	[SerializeField] Material imposterMaterial;
-	[SerializeField] bool addLightFirst = true;
+	[SerializeField] float lightFlashingFrequency;
+	[SerializeField] float callOutSpacing;
 
+	AudioSource player;
 	MeshRenderer meshRenderer;
 	bool active = false;
+	
+	float imposterLightMaxIntensity;
+	float lastCallOutTime;
+	Light imposterLight;
+
 
 	// Use this for initialization
 	void Start () {
@@ -18,32 +23,27 @@ public class Imposter : MonoBehaviour {
 			Imposter.story = GameObject.FindObjectOfType<Story>();
 		meshRenderer = GetComponent<MeshRenderer>();
 		active = Imposter.story.PlayIteration == activeIteration;
-		if (active)
-			AddImposterLight();
+		player = GetComponent<AudioSource>();
+		imposterLight = GetComponent<Light>();
+		imposterLightMaxIntensity = imposterLight.intensity;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (active) {
 
-//			FlashLight();
+			FlashLight();
+		}
+	}
+
+	bool IsCallOutTime {
+		get {
+			return !player.isPlaying && Time.timeSinceLevelLoad - lastCallOutTime > callOutSpacing;
 		}
 	}
 
 	void FlashLight() {
-		imposterMaterial.SetColor("_Emission",
-		                          imposterLight * Mathf.Clamp01(Mathf.Sin (Time.timeSinceLevelLoad)));
-		DynamicGI.UpdateMaterials(meshRenderer);
-		DynamicGI.UpdateEnvironment();
-	}
-
-	void AddImposterLight() {
-		Material[] materials = new Material[meshRenderer.materials.Length + 1];
-		materials[addLightFirst ? 0 : materials.Length - 1] = imposterMaterial;
-		for (int i=0; i<meshRenderer.materials.Length; i++)
-			materials[i + (addLightFirst ? 1 : 0)] = meshRenderer.materials[i];
-		meshRenderer.materials = materials;
-		imposterMaterial.EnableKeyword("_Emission");
+		imposterLight.intensity = Mathf.Pow(Mathf.Sin(Time.timeSinceLevelLoad * lightFlashingFrequency), 2) * imposterLightMaxIntensity; 
 	}
 
 }
