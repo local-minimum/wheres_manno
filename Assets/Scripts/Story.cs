@@ -3,13 +3,12 @@ using System.Collections;
 
 public class Story : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
+	[SerializeField] int playIteration = 0;
+
+	public int PlayIteration {
+		get {
+			return playIteration;
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }
