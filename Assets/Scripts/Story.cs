@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public enum SleepTypes {FoundImposter, FoundTarget, GaveUp, GotTired};
 
@@ -15,6 +16,11 @@ public class Story : MonoBehaviour {
 	[SerializeField] int maxSleepCycles = 10;
 	[HideInInspector]
 	public event PlayerSleep OnSleep;
+	private int highestImposterNumber;
+
+	void Start() {
+		highestImposterNumber = GameObject.FindObjectsOfType<Imposter>().Max(i => i.ActiveIteration);
+	}
 
 	public int PlayIteration {
 		get {
@@ -51,9 +57,13 @@ public class Story : MonoBehaviour {
 
 	public void FoundImposter() {
 		playIteration++;
-		sleepCycles++;
-		if (OnSleep != null)
-			OnSleep(SleepTypes.FoundImposter);
+		if (playIteration > highestImposterNumber)
+			FoundTarget();
+		else {
+			sleepCycles++;
+			if (OnSleep != null)
+				OnSleep(SleepTypes.FoundImposter);
+		}
 	}
 
 	public void FoundTarget() {

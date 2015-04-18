@@ -8,6 +8,7 @@ public class Imposter : MonoBehaviour {
 	[SerializeField] float lightFlashingFrequency;
 	[SerializeField] float callOutSpacing;
 
+
 	AudioSource player;
 	bool active = false;
 	
@@ -15,11 +16,36 @@ public class Imposter : MonoBehaviour {
 	float lastCallOutTime;
 	Light imposterLight;
 
+	public int ActiveIteration {
+		get {
+			return activeIteration;
+		}
+	}
 
-	// Use this for initialization
-	void Start () {
+	void OnEnable() {
+		story.OnSleep += HandleSleep;
+	}
+
+	void OnDisable() {
+		story.OnSleep -= HandleSleep;
+	}
+
+	void HandleSleep(SleepTypes sleepType) {
+		if (sleepType == SleepTypes.FoundImposter)
+			active = Imposter.story.PlayIteration == activeIteration;
+		else if (active)
+			active = sleepType == SleepTypes.GaveUp || sleepType == SleepTypes.GotTired;
+
+		imposterLight.enabled = active;
+	}
+
+	void Awake() {
 		if (Imposter.story == null)
 			Imposter.story = GameObject.FindObjectOfType<Story>();
+	}
+
+	void Start () {
+
 
 		active = Imposter.story.PlayIteration == activeIteration;
 		player = GetComponent<AudioSource>();
@@ -53,8 +79,8 @@ public class Imposter : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.tag == "Player")
-			Debug.Log("Found Active Imposter");
+		if (active && other.tag == "Player")
+			story.FoundImposter();
 	}
 
 }
