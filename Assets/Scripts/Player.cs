@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityStandardAssets.Characters.FirstPerson;
 
+public delegate void Bash();
+
 public class Player : MonoBehaviour {
 
 	Story story;
 	Health health;
 
+	public event Bash OnBash;
 	RigidbodyFirstPersonController fpsController;
 	HeadBob headBob;
 
@@ -27,7 +30,13 @@ public class Player : MonoBehaviour {
 		startRotation = transform.localRotation;
 		startScale = transform.localScale;
 	}
-	
+
+	void Update() {
+		if (Input.GetButtonDown("Fire1") && OnBash != null)
+			OnBash();
+
+	}
+
 	void OnEnable() {
 		story.OnPlayerSleep += HandleSleep;
 		story.OnPlayerWakeUp += HandleAwake;

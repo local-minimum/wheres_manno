@@ -36,11 +36,13 @@ public class Health : MonoBehaviour {
 	void OnEnable() {
 		story.OnPlayerSleep += HandleSleep;
 		story.OnPlayerWakeUp += HandlePlayerWakeUp;
+		GetComponent<Player>().OnBash += Bash;
 	}
 
 	void OnDisable() {
 		story.OnPlayerSleep -= HandleSleep;
 		story.OnPlayerWakeUp -= HandlePlayerWakeUp;
+		GetComponent<Player>().OnBash -= Bash;
 	}
 
 	void HandleSleep(SleepTypes sleepType) {

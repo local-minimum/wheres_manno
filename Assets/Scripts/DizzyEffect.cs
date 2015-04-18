@@ -19,9 +19,14 @@ public class DizzyEffect : MonoBehaviour {
 		meshRenderer.enabled = false;
 	}
 
-	void Update() {
-		if (Input.GetButtonDown("Fire1"))
-			MakeDizzy();
+	void OnEnable() {
+		GetComponentInParent<Player>().OnBash += MakeDizzy;
+	}
+
+	void OnDisable() {
+		Player player = GetComponentInParent<Player>();
+		if (player != null)
+			player.OnBash -= MakeDizzy;
 	}
 	
 	public void MakeDizzy() {
