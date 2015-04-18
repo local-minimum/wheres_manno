@@ -16,6 +16,8 @@ public class Story : MonoBehaviour {
 
 	public AudioClip ImposterVocalisation {
 		get {
+			if (imposterVocalisations.Length == 0)
+				return null;
 			return imposterVocalisations[Random.Range(0, imposterVocalisations.Length)];
 		}
 	}
