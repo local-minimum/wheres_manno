@@ -20,6 +20,7 @@ public class Health : MonoBehaviour {
 	float deterioration;
 	float nextStep;
 	float stepTime;
+	bool sleeping = false;
 
 	void Awake() {
 		story = GameObject.FindObjectOfType<Story>();
@@ -33,19 +34,31 @@ public class Health : MonoBehaviour {
 	}
 
 	void OnEnable() {
-		story.OnSleep += HandleSleep;
+		story.OnPlayerSleep += HandleSleep;
+		story.OnPlayerWakeUp += HandlePlayerWakeUp;
 	}
 
 	void OnDisable() {
-		story.OnSleep -= HandleSleep;
+		story.OnPlayerSleep -= HandleSleep;
+		story.OnPlayerWakeUp -= HandlePlayerWakeUp;
 	}
 
 	void HandleSleep(SleepTypes sleepType) {
+		sleeping = true;
 		if (sleepType == SleepTypes.FoundTarget || sleepType == SleepTypes.GotTired)
 			Sleep();
 	}
+	
+	void HandlePlayerWakeUp(SleepTypes sleepType) {
+		sleeping = sleepType != SleepTypes.GotTired && sleepType != SleepTypes.FoundImposter;
+		if (!sleeping)
+			FadeIn(0.2f);
+	}
 
 	void Update() {
+		if (sleeping)
+			return;
+
 		if (isWalking)
 			updateStepTime();
 
@@ -105,7 +118,30 @@ public class Health : MonoBehaviour {
 	}
 
 	void UpdateAilments() {
-		foreach (Ailment ailment in ailments)
-			ailment.Intensity = 1 - health / fullHealth;
+		if (sleeping)
+			return;
+
+		Ailment.Intensity = 1 - health / fullHealth;
+	}
+
+	public void FadeOut(float duration) {
+		float intensity = 1 - health / fullHealth;
+		StartCoroutine(Fade(intensity, 1, duration));
+	}
+
+	public void FadeIn(float duration) {
+		float intensity = 1 - health / fullHealth;
+		StartCoroutine(Fade(1, intensity, duration));
+	}
+
+	IEnumerator<WaitForSeconds> Fade(float from, float to, float duration) {
+		float startTime = Time.timeSinceLevelLoad;
+		float endTime = startTime + duration;
+		float curTime = startTime;
+		while (curTime < endTime) {
+			curTime = Time.timeSinceLevelLoad;
+			Ailment.Intensity = Mathf.Lerp(from, to, (curTime - startTime) / duration);
+			yield return new WaitForSeconds(0.05f);
+		}
 	}
 }

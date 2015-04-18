@@ -23,11 +23,11 @@ public class Imposter : MonoBehaviour {
 	}
 
 	void OnEnable() {
-		story.OnSleep += HandleSleep;
+		story.OnPlayerSleep += HandleSleep;
 	}
 
 	void OnDisable() {
-		story.OnSleep -= HandleSleep;
+		story.OnPlayerSleep -= HandleSleep;
 	}
 
 	void HandleSleep(SleepTypes sleepType) {

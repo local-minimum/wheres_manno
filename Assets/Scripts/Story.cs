@@ -15,7 +15,10 @@ public class Story : MonoBehaviour {
 	int sleepCycles = 0;
 	[SerializeField] int maxSleepCycles = 10;
 	[HideInInspector]
-	public event PlayerSleep OnSleep;
+
+	public event PlayerSleep OnPlayerSleep;
+	public event PlayerSleep OnPlayerWakeUp;
+
 	private int highestImposterNumber;
 
 	void Start() {
@@ -51,8 +54,8 @@ public class Story : MonoBehaviour {
 		sleepCycles++;
 		if (sleepCycles > maxSleepCycles)
 			GiveUp();
-		else if (OnSleep != null)
-			OnSleep(SleepTypes.GotTired);
+		else if (OnPlayerSleep != null)
+			OnPlayerSleep(SleepTypes.GotTired);
 	}
 
 	public void FoundImposter() {
@@ -61,18 +64,23 @@ public class Story : MonoBehaviour {
 			FoundTarget();
 		else {
 			sleepCycles++;
-			if (OnSleep != null)
-				OnSleep(SleepTypes.FoundImposter);
+			if (OnPlayerSleep != null)
+				OnPlayerSleep(SleepTypes.FoundImposter);
 		}
 	}
 
 	public void FoundTarget() {
-		if (OnSleep != null)
-			OnSleep(SleepTypes.FoundTarget);
+		if (OnPlayerSleep != null)
+			OnPlayerSleep(SleepTypes.FoundTarget);
 	}
 
 	public void GiveUp() {
-		if (OnSleep != null)
-			OnSleep(SleepTypes.GaveUp);
+		if (OnPlayerSleep != null)
+			OnPlayerSleep(SleepTypes.GaveUp);
+	}
+
+	public void AwakePlayer(SleepTypes sleepType) {
+		if (OnPlayerWakeUp != null)
+			OnPlayerWakeUp(sleepType);
 	}
 }
