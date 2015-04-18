@@ -4,6 +4,7 @@ using UnityStandardAssets.Characters.FirstPerson;
 
 public class Health : MonoBehaviour {
 
+	[SerializeField] float sleepThreshold;
 	[SerializeField] float fullHealth;
 	[SerializeField] float sleepRegen;
 	[SerializeField] float bashRegen;
@@ -12,16 +13,36 @@ public class Health : MonoBehaviour {
 	[SerializeField] float stepDuration;
 
 	RigidbodyFirstPersonController fpsController;
+	Story story;
+
 	Ailment[] ailments;
 	float health;
 	float deterioration;
 	float nextStep;
 	float stepTime;
 
+	void Awake() {
+		story = GameObject.FindObjectOfType<Story>();
+	}
+
 	void Start() {
 		ailments = GetComponentsInChildren<Ailment>();
 		fpsController = GetComponentInChildren<RigidbodyFirstPersonController>();
+
 		Reset();
+	}
+
+	void OnEnable() {
+		story.OnSleep += HandleSleep;
+	}
+
+	void OnDisable() {
+		story.OnSleep -= HandleSleep;
+	}
+
+	void HandleSleep(SleepTypes sleepType) {
+		if (sleepType == SleepTypes.FoundTarget || sleepType == SleepTypes.GotTired)
+			Sleep();
 	}
 
 	void Update() {
@@ -64,6 +85,8 @@ public class Health : MonoBehaviour {
 	void Step() {
 		health -= deterioration;
 		Mathf.Max(health, 0);
+		if (health <= Mathf.Max(0, sleepThreshold))
+			story.Sleep();
 		UpdateAilments();
 		SetNextStepTime();
 	}

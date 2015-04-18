@@ -1,12 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum SleepTypes {FoundImposter, FoundTarget, GaveUp, GotTired};
+
+public delegate void PlayerSleep(SleepTypes sleepType);
+
 public class Story : MonoBehaviour {
 
 	[SerializeField] int playIteration = 0;
 	[SerializeField] AudioClip[] imposterVocalisations;
 	[SerializeField] AudioClip[] ramblings;
 	int rambling = -1;
+	int sleepCycles = 0;
+	[SerializeField] int maxSleepCycles = 10;
+	[HideInInspector]
+	public event PlayerSleep OnSleep;
 
 	public int PlayIteration {
 		get {
@@ -33,8 +41,28 @@ public class Story : MonoBehaviour {
 		}
 	}
 
-	public void ResetCurrentIteration() {
-
+	public void Sleep() {
+		sleepCycles++;
+		if (sleepCycles > maxSleepCycles)
+			GiveUp();
+		else if (OnSleep != null)
+			OnSleep(SleepTypes.GotTired);
 	}
 
+	public void FoundImposter() {
+		playIteration++;
+		sleepCycles++;
+		if (OnSleep != null)
+			OnSleep(SleepTypes.FoundImposter);
+	}
+
+	public void FoundTarget() {
+		if (OnSleep != null)
+			OnSleep(SleepTypes.FoundTarget);
+	}
+
+	public void GiveUp() {
+		if (OnSleep != null)
+			OnSleep(SleepTypes.GaveUp);
+	}
 }
