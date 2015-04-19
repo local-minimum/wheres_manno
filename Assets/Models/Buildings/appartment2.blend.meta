@@ -21,6 +21,15 @@ ModelImporter:
     100026: LivingRoomTable
     100028: Table
     100030: TV
+    100032: BookShelf
+    100034: BookShelf2
+    100036: BookShelf3
+    100038: Chair_002
+    100040: CleaningCabinett_001
+    100042: CleaningCabinett_002
+    100044: Table_001
+    100046: BathSink
+    100048: Toilet
     400000: //RootNode
     400002: Appartment
     400004: CleaningCabinett
@@ -37,6 +46,15 @@ ModelImporter:
     400026: LivingRoomTable
     400028: Table
     400030: TV
+    400032: BookShelf
+    400034: BookShelf2
+    400036: BookShelf3
+    400038: Chair_002
+    400040: CleaningCabinett_001
+    400042: CleaningCabinett_002
+    400044: Table_001
+    400046: BathSink
+    400048: Toilet
     2300000: //RootNode
     2300002: Appartment
     2300004: CleaningCabinett
@@ -53,6 +71,15 @@ ModelImporter:
     2300026: LivingRoomTable
     2300028: Table
     2300030: TV
+    2300032: BookShelf
+    2300034: BookShelf2
+    2300036: BookShelf3
+    2300038: Chair_002
+    2300040: CleaningCabinett_001
+    2300042: CleaningCabinett_002
+    2300044: Table_001
+    2300046: BathSink
+    2300048: Toilet
     3300000: //RootNode
     3300002: Appartment
     3300004: CleaningCabinett
@@ -69,6 +96,15 @@ ModelImporter:
     3300026: LivingRoomTable
     3300028: Table
     3300030: TV
+    3300032: BookShelf
+    3300034: BookShelf2
+    3300036: BookShelf3
+    3300038: Chair_002
+    3300040: CleaningCabinett_001
+    3300042: CleaningCabinett_002
+    3300044: Table_001
+    3300046: BathSink
+    3300048: Toilet
     4300000: Cube
     4300002: CornerShelf
     4300004: Freezer
@@ -85,6 +121,15 @@ ModelImporter:
     4300026: LivingRoomTable
     4300028: Table
     4300030: TV
+    4300032: BookShelf3
+    4300034: BookShelf2
+    4300036: BookShelf
+    4300038: Chair_002
+    4300040: Table_001
+    4300042: CleaningCabinett_002
+    4300044: CleaningCabinett_001
+    4300046: Toilet
+    4300048: BathSink
     7400000: Default Take
     9500000: //RootNode
   materials:
