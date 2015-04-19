@@ -14,9 +14,8 @@ public class Story : MonoBehaviour {
 	int rambling = -1;
 	int sleepCycles = 0;
 	[SerializeField] int maxSleepCycles = 10;
-	[HideInInspector]
 
-	public AudioClip GameOverClip;
+    public AudioClip GiveUpClip;
 	public AudioClip HuggingMoonClip;
 
 	public event PlayerSleep OnPlayerSleep;

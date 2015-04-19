@@ -100,7 +100,7 @@ public class Player : MonoBehaviour {
 
 	IEnumerator<WaitForSeconds> Fail() {
 		AudioSource soundPlayer = GetComponentInChildren<AudioSource>();
-		soundPlayer.PlayOneShot(story.GameOverClip);
+		soundPlayer.PlayOneShot(story.GiveUpClip);
 		while (soundPlayer.isPlaying)
 			yield return new WaitForSeconds(0.1f);
 		yield return new WaitForSeconds(5f);
