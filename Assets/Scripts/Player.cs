@@ -13,7 +13,7 @@ public class Player : MonoBehaviour {
 
 	Story story;
 	Health health;
-	[SerializeField] iTweenPath pathToMoon;
+	[SerializeField] Transform[] pathToMoon;
 
 	public event Bash OnBash;
 	RigidbodyFirstPersonController fpsController;
@@ -66,24 +66,36 @@ public class Player : MonoBehaviour {
 		if (sleepType == SleepTypes.FoundImposter || sleepType == SleepTypes.GotTired)
 			StartCoroutine( SleepCycle(sleepType));
 		else if (sleepType == SleepTypes.FoundTarget)
-			Win();
+			StartCoroutine(Win());
 		else if (sleepType == SleepTypes.GaveUp)
 			StartCoroutine(Fail());
 	}
 
-	void Win() {
+	IEnumerator<WaitForSeconds> Win() {
 		playerBody.isKinematic = true;
 		playerCollider.isTrigger = true;
 		eventsAnimator.SetTrigger(winTrigger);
+		bool hasPlayedSound = false;
+		AudioSource soundPlayer = GetComponentInChildren<AudioSource>();
 
+		for (float p=0; p<4f;p+=0.03f) {
+			iTween.PutOnPath(gameObject, pathToMoon, Mathf.Clamp01(p));
+			if (p>1.2f && !hasPlayedSound) {
+				soundPlayer.PlayOneShot(story.HuggingMoonClip);
+				hasPlayedSound = true;
+			}
+			yield return new WaitForSeconds(0.03f);
+		}
+		yield return new WaitForSeconds(5f);
+		Application.LoadLevel(menuSceneName);
 	}
 
 	IEnumerator<WaitForSeconds> Fail() {
-		AudioSource player = GetComponentInChildren<AudioSource>();
-		player.PlayOneShot(story.GameOverClip);
-		while (player.isPlaying)
+		AudioSource soundPlayer = GetComponentInChildren<AudioSource>();
+		soundPlayer.PlayOneShot(story.GameOverClip);
+		while (soundPlayer.isPlaying)
 			yield return new WaitForSeconds(0.1f);
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(5f);
 		Application.LoadLevel(menuSceneName);
 	}
 
