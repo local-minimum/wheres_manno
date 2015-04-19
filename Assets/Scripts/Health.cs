@@ -12,6 +12,9 @@ public class Health : MonoBehaviour {
 	[SerializeField] float baseDeterioration;
 	[SerializeField] float stepDuration;
 
+	[SerializeField] AudioClip BeatA;
+	[SerializeField] AudioClip BeatB;
+
 	RigidbodyFirstPersonController fpsController;
 	Story story;
 
