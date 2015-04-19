@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 	Story story;
 	Health health;
 	[SerializeField] Transform[] pathToMoon;
+	[SerializeField] TextMesh moonText;
 
 	public event Bash OnBash;
 	RigidbodyFirstPersonController fpsController;
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour {
 		startPosition = transform.localPosition;
 		startRotation = transform.localRotation;
 		startScale = transform.localScale;
+		Cursor.visible = false;
 	}
 
 	void Update() {
@@ -93,7 +95,10 @@ public class Player : MonoBehaviour {
 			iTween.PutOnPath(gameObject, pathToMoon, Mathf.Clamp01(p));
 			if (p>0.5f && !hasPlayedSound) {
 				soundPlayer.PlayOneShot(story.HuggingMoonClip);
+				moonText.gameObject.SetActive(true);
 				hasPlayedSound = true;
+			} else if (p>0.5f) {
+				moonText.offsetZ = Mathf.Lerp(-30, 0, p/4);
 			}
 			cam.transform.LookAt(pathToMoon[pathToMoon.Length - 1]);
 			yield return new WaitForSeconds(0.03f);

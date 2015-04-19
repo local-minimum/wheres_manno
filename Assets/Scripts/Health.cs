@@ -165,7 +165,8 @@ public class Health : MonoBehaviour {
 		while (true) {
 			yield return new WaitForSeconds(baseBeatFreq - intensityFactor * intensity);
 			soundPlayer.PlayOneShot(BeatA);
-			iTween.ShakePosition(beatHead, Vector3.down * 0.5f, 0.2f);
+			if (!sleeping)
+				iTween.ShakePosition(beatHead, Vector3.down * 0.5f, 0.2f);
 		}
 	}
 }
