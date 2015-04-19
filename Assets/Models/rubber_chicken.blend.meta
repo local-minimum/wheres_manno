@@ -21,6 +21,19 @@ ModelImporter:
     100026: Bone_012
     100028: //RootNode
     100030: RubberChicken
+    100032: Chest
+    100034: Hand_L
+    100036: Hand_R
+    100038: Head
+    100040: LowerNeck
+    100042: LowerWing_L
+    100044: LowerWing_R
+    100046: Pelvic
+    100048: Shoulder_L
+    100050: Shoulder_R
+    100052: UpperNeck
+    100054: UpperWing_L
+    100056: UpperWing_R
     400000: Armature
     400002: Bone
     400004: Bone_001
@@ -37,6 +50,19 @@ ModelImporter:
     400026: Bone_012
     400028: //RootNode
     400030: RubberChicken
+    400032: Chest
+    400034: Hand_L
+    400036: Hand_R
+    400038: Head
+    400040: LowerNeck
+    400042: LowerWing_L
+    400044: LowerWing_R
+    400046: Pelvic
+    400048: Shoulder_L
+    400050: Shoulder_R
+    400052: UpperNeck
+    400054: UpperWing_L
+    400056: UpperWing_R
     4300000: RubberChicken
     7400000: Default Take
     9500000: //RootNode
