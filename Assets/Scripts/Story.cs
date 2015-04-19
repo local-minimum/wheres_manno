@@ -83,4 +83,16 @@ public class Story : MonoBehaviour {
 		if (OnPlayerWakeUp != null)
 			OnPlayerWakeUp(sleepType);
 	}
+
+	public bool FirstIteration {
+		get {
+			return playIteration == 0;
+		}
+	}
+
+	public bool LastIteration {
+		get {
+			return playIteration == highestImposterNumber;
+		}
+	}
 }
