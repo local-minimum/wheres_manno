@@ -13,8 +13,11 @@ public class Health : MonoBehaviour {
 	[SerializeField] float stepDuration;
 
 	[SerializeField] AudioClip BeatA;
-	[SerializeField] AudioClip BeatB;
+	[SerializeField] float baseBeatFreq = 1.2f;
+	[SerializeField] float intensityFactor = 0.5f;
+	[SerializeField] GameObject beatHead;
 
+	AudioSource soundPlayer;
 	RigidbodyFirstPersonController fpsController;
 	Story story;
 
@@ -32,7 +35,8 @@ public class Health : MonoBehaviour {
 	void Start() {
 		ailments = GetComponentsInChildren<Ailment>();
 		fpsController = GetComponentInChildren<RigidbodyFirstPersonController>();
-
+		soundPlayer = GetComponent<AudioSource>();
+		StartCoroutine(KeepTheBeat());
 		Reset();
 	}
 
@@ -154,6 +158,14 @@ public class Health : MonoBehaviour {
 			curTime = Time.timeSinceLevelLoad;
 			Ailment.Intensity = Mathf.Lerp(from, to, (curTime - startTime) / duration);
 			yield return new WaitForSeconds(0.05f);
+		}
+	}
+
+	IEnumerator<WaitForSeconds> KeepTheBeat() {
+		while (true) {
+			yield return new WaitForSeconds(baseBeatFreq - intensityFactor * intensity);
+			soundPlayer.PlayOneShot(BeatA);
+			iTween.ShakePosition(beatHead, Vector3.down * 0.5f, 0.2f);
 		}
 	}
 }

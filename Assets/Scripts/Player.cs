@@ -87,6 +87,7 @@ public class Player : MonoBehaviour {
 		playerCollider.isTrigger = true;
 		eventsAnimator.SetTrigger(winTrigger);
 		bool hasPlayedSound = false;
+		Camera cam = headBob.GetComponentInChildren<Camera>();
 
 		for (float p=0; p<4f;p+=0.01f) {
 			iTween.PutOnPath(gameObject, pathToMoon, Mathf.Clamp01(p));
@@ -94,6 +95,7 @@ public class Player : MonoBehaviour {
 				soundPlayer.PlayOneShot(story.HuggingMoonClip);
 				hasPlayedSound = true;
 			}
+			cam.transform.LookAt(pathToMoon[pathToMoon.Length - 1]);
 			yield return new WaitForSeconds(0.03f);
 		}
 		yield return new WaitForSeconds(5f);

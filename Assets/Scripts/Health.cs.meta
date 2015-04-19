@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: 58e00767f217d4e429606aaca7e6a3f6
-timeCreated: 1429362657
+timeCreated: 1429480108
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - BeatA: {fileID: 8300000, guid: 81cbb3feafe98e1419e840e31569bab4, type: 3}
+  - BeatB: {fileID: 8300000, guid: 294af62be61cbdc468ae1ac1a9b2c5df, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
