@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 	[SerializeField] Animator eventsAnimator;
 	[SerializeField] string bashTrigger;
 	[SerializeField] string winTrigger;
+	[SerializeField] string menuSceneName;
 
 	Story story;
 	Health health;
@@ -66,6 +67,8 @@ public class Player : MonoBehaviour {
 			StartCoroutine( SleepCycle(sleepType));
 		else if (sleepType == SleepTypes.FoundTarget)
 			Win();
+		else if (sleepType == SleepTypes.GaveUp)
+			StartCoroutine(Fail());
 	}
 
 	void Win() {
@@ -73,6 +76,15 @@ public class Player : MonoBehaviour {
 		playerCollider.isTrigger = true;
 		eventsAnimator.SetTrigger(winTrigger);
 
+	}
+
+	IEnumerator<WaitForSeconds> Fail() {
+		AudioSource player = GetComponentInChildren<AudioSource>();
+		player.PlayOneShot(story.GameOverClip);
+		while (player.isPlaying)
+			yield return new WaitForSeconds(0.1f);
+		yield return new WaitForSeconds(2f);
+		Application.LoadLevel(menuSceneName);
 	}
 
 	void HandleBash() {
