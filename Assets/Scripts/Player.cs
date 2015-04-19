@@ -51,6 +51,8 @@ public class Player : MonoBehaviour {
 	void Update() {
 		if (Input.GetButtonDown("Fire1") && OnBash != null && fpsController.enabled == true)
 			OnBash();
+		else if (Input.GetButtonDown("Cancel"))
+			Application.LoadLevel(menuSceneName);
 
 	}
 
