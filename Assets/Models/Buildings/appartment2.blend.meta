@@ -37,6 +37,11 @@ ModelImporter:
     100058: Fork
     100060: Knife
     100062: Plate
+    100064: Lamp_001
+    100066: Vase
+    100068: Cube
+    100070: Door
+    100072: Door_001
     400000: //RootNode
     400002: Appartment
     400004: CleaningCabinett
@@ -69,6 +74,11 @@ ModelImporter:
     400058: Fork
     400060: Knife
     400062: Plate
+    400064: Lamp_001
+    400066: Vase
+    400068: Cube
+    400070: Door
+    400072: Door_001
     2300000: //RootNode
     2300002: Appartment
     2300004: CleaningCabinett
@@ -101,6 +111,11 @@ ModelImporter:
     2300058: Fork
     2300060: Knife
     2300062: Plate
+    2300064: Lamp_001
+    2300066: Vase
+    2300068: Cube
+    2300070: Door
+    2300072: Door_001
     3300000: //RootNode
     3300002: Appartment
     3300004: CleaningCabinett
@@ -133,6 +148,11 @@ ModelImporter:
     3300058: Fork
     3300060: Knife
     3300062: Plate
+    3300064: Lamp_001
+    3300066: Vase
+    3300068: Cube
+    3300070: Door
+    3300072: Door_001
     4300000: Cube
     4300002: CornerShelf
     4300004: Freezer
@@ -165,6 +185,10 @@ ModelImporter:
     4300058: Fork
     4300060: Knife
     4300062: Plate
+    4300064: Lamp_001
+    4300066: Vase
+    4300068: Door_001
+    4300070: Door
     7400000: Default Take
     9500000: //RootNode
   materials:
