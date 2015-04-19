@@ -6,6 +6,7 @@ public class WalkTrail : MonoBehaviour {
 	Story story;
 	Player player;
 	ParticleSystem emitter;
+	[SerializeField] float velocity;
 
 	// Use this for initialization
 	void Awake () {
@@ -33,11 +34,10 @@ public class WalkTrail : MonoBehaviour {
 	}
 
 	void HandleAwake(SleepTypes sleepType) {
-
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		emitter.emissionRate = player.velocity * 2f;
 	}
 }

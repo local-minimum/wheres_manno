@@ -26,6 +26,12 @@ public class Player : MonoBehaviour {
 	Rigidbody playerBody;
 	Collider playerCollider;
 
+	public float velocity {
+		get {
+			return playerBody.velocity.magnitude;
+		}
+	}
+
 	void Awake() {
 		story = GameObject.FindObjectOfType<Story>();
 		fpsController = GetComponentInChildren<RigidbodyFirstPersonController>();
@@ -43,7 +49,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update() {
-		if (Input.GetButtonDown("Fire1") && OnBash != null)
+		if (Input.GetButtonDown("Fire1") && OnBash != null && fpsController.enabled == true)
 			OnBash();
 
 	}
