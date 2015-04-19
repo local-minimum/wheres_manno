@@ -6,11 +6,13 @@ public delegate void Bash();
 
 public class Player : MonoBehaviour {
 
-	[SerializeField] Animator bashAnimator;
+	[SerializeField] Animator eventsAnimator;
 	[SerializeField] string bashTrigger;
+	[SerializeField] string winTrigger;
 
 	Story story;
 	Health health;
+	[SerializeField] iTweenPath pathToMoon;
 
 	public event Bash OnBash;
 	RigidbodyFirstPersonController fpsController;
@@ -20,11 +22,16 @@ public class Player : MonoBehaviour {
 	Quaternion startRotation;
 	Vector3 startScale;
 
+	Rigidbody playerBody;
+	Collider playerCollider;
+
 	void Awake() {
 		story = GameObject.FindObjectOfType<Story>();
 		fpsController = GetComponentInChildren<RigidbodyFirstPersonController>();
 		headBob = GetComponentInChildren<HeadBob>();
 		health = GetComponent<Health>();
+		playerBody = GetComponent<Rigidbody>();
+		playerCollider = GetComponent<Collider>();
 	}
 
 	// Use this for initialization
@@ -57,10 +64,19 @@ public class Player : MonoBehaviour {
 		headBob.enabled = false;
 		if (sleepType == SleepTypes.FoundImposter || sleepType == SleepTypes.GotTired)
 			StartCoroutine( SleepCycle(sleepType));
+		else if (sleepType == SleepTypes.FoundTarget)
+			Win();
+	}
+
+	void Win() {
+		playerBody.isKinematic = true;
+		playerCollider.isTrigger = true;
+		eventsAnimator.SetTrigger(winTrigger);
+
 	}
 
 	void HandleBash() {
-		bashAnimator.SetTrigger(bashTrigger);
+		eventsAnimator.SetTrigger(bashTrigger);
 	}
 	
 	IEnumerator<WaitForSeconds> SleepCycle(SleepTypes sleepType) {
