@@ -18,6 +18,9 @@ ModelImporter:
     100020: Chair
     100022: Chair_001
     100024: Sofa
+    100026: LivingRoomTable
+    100028: Table
+    100030: TV
     400000: //RootNode
     400002: Appartment
     400004: CleaningCabinett
@@ -31,6 +34,9 @@ ModelImporter:
     400020: Chair
     400022: Chair_001
     400024: Sofa
+    400026: LivingRoomTable
+    400028: Table
+    400030: TV
     2300000: //RootNode
     2300002: Appartment
     2300004: CleaningCabinett
@@ -44,6 +50,9 @@ ModelImporter:
     2300020: Chair
     2300022: Chair_001
     2300024: Sofa
+    2300026: LivingRoomTable
+    2300028: Table
+    2300030: TV
     3300000: //RootNode
     3300002: Appartment
     3300004: CleaningCabinett
@@ -57,6 +66,9 @@ ModelImporter:
     3300020: Chair
     3300022: Chair_001
     3300024: Sofa
+    3300026: LivingRoomTable
+    3300028: Table
+    3300030: TV
     4300000: Cube
     4300002: CornerShelf
     4300004: Freezer
@@ -70,6 +82,9 @@ ModelImporter:
     4300020: Chair
     4300022: ArmChair
     4300024: Sofa
+    4300026: LivingRoomTable
+    4300028: Table
+    4300030: TV
     7400000: Default Take
     9500000: //RootNode
   materials:
