@@ -6,6 +6,9 @@ public delegate void Bash();
 
 public class Player : MonoBehaviour {
 
+	[SerializeField] Animator bashAnimator;
+	[SerializeField] string bashTrigger;
+
 	Story story;
 	Health health;
 
@@ -40,11 +43,13 @@ public class Player : MonoBehaviour {
 	void OnEnable() {
 		story.OnPlayerSleep += HandleSleep;
 		story.OnPlayerWakeUp += HandleAwake;
+		OnBash += HandleBash;
 	}
 
 	void OnDisable() {
 		story.OnPlayerSleep -= HandleSleep;
 		story.OnPlayerWakeUp -= HandleAwake;
+		OnBash -= HandleBash;
 	}
 
 	void HandleSleep(SleepTypes sleepType) {
@@ -52,6 +57,10 @@ public class Player : MonoBehaviour {
 		headBob.enabled = false;
 		if (sleepType == SleepTypes.FoundImposter || sleepType == SleepTypes.GotTired)
 			StartCoroutine( SleepCycle(sleepType));
+	}
+
+	void HandleBash() {
+		bashAnimator.SetTrigger(bashTrigger);
 	}
 	
 	IEnumerator<WaitForSeconds> SleepCycle(SleepTypes sleepType) {

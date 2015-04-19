@@ -5,7 +5,7 @@ public class DizzyEffect : MonoBehaviour {
 
 	[SerializeField] float dizzySpeed;
 	[SerializeField] float dizzyDuration;
-	[SerializeField] float easeDuration;
+	[SerializeField] float delay;
 
 	MeshRenderer meshRenderer;
 	bool dizzy = false;
@@ -38,11 +38,10 @@ public class DizzyEffect : MonoBehaviour {
 	}
 
 	IEnumerator<WaitForSeconds> Dizzify() {
-
-		meshRenderer.enabled = true;
 		dizzy = true;
-		spinUntilTime = Time.timeSinceLevelLoad + dizzyDuration + easeDuration;
-
+		spinUntilTime = Time.timeSinceLevelLoad + dizzyDuration + delay;
+		yield return new WaitForSeconds(delay);
+		meshRenderer.enabled = true;
 		while (Time.timeSinceLevelLoad < spinUntilTime) {
 			angle += dizzySpeed * spinDelta;
 			transform.Rotate(Vector3.forward, dizzySpeed * spinDelta, Space.Self);
