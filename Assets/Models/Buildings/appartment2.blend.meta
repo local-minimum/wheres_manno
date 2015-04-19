@@ -14,6 +14,10 @@ ModelImporter:
     100012: KitchenFurniture
     100014: KitchenFurnitureTop
     100016: Bed
+    100018: ArmChair
+    100020: Chair
+    100022: Chair_001
+    100024: Sofa
     400000: //RootNode
     400002: Appartment
     400004: CleaningCabinett
@@ -23,6 +27,10 @@ ModelImporter:
     400012: KitchenFurniture
     400014: KitchenFurnitureTop
     400016: Bed
+    400018: ArmChair
+    400020: Chair
+    400022: Chair_001
+    400024: Sofa
     2300000: //RootNode
     2300002: Appartment
     2300004: CleaningCabinett
@@ -32,6 +40,10 @@ ModelImporter:
     2300012: KitchenFurniture
     2300014: KitchenFurnitureTop
     2300016: Bed
+    2300018: ArmChair
+    2300020: Chair
+    2300022: Chair_001
+    2300024: Sofa
     3300000: //RootNode
     3300002: Appartment
     3300004: CleaningCabinett
@@ -41,6 +53,10 @@ ModelImporter:
     3300012: KitchenFurniture
     3300014: KitchenFurnitureTop
     3300016: Bed
+    3300018: ArmChair
+    3300020: Chair
+    3300022: Chair_001
+    3300024: Sofa
     4300000: Cube
     4300002: CornerShelf
     4300004: Freezer
@@ -50,6 +66,10 @@ ModelImporter:
     4300012: KitchenFurniture
     4300014: Appartment
     4300016: Bed
+    4300018: Chair_001
+    4300020: Chair
+    4300022: ArmChair
+    4300024: Sofa
     7400000: Default Take
     9500000: //RootNode
   materials:
