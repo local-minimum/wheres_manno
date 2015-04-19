@@ -32,6 +32,8 @@ ModelImporter:
     100048: Toilet
     100050: BathroomMirror
     100052: Bathtub
+    100054: Globe
+    100056: Globe_001
     400000: //RootNode
     400002: Appartment
     400004: CleaningCabinett
@@ -59,6 +61,8 @@ ModelImporter:
     400048: Toilet
     400050: BathroomMirror
     400052: Bathtub
+    400054: Globe
+    400056: Globe_001
     2300000: //RootNode
     2300002: Appartment
     2300004: CleaningCabinett
@@ -86,6 +90,8 @@ ModelImporter:
     2300048: Toilet
     2300050: BathroomMirror
     2300052: Bathtub
+    2300054: Globe
+    2300056: Globe_001
     3300000: //RootNode
     3300002: Appartment
     3300004: CleaningCabinett
@@ -113,6 +119,8 @@ ModelImporter:
     3300048: Toilet
     3300050: BathroomMirror
     3300052: Bathtub
+    3300054: Globe
+    3300056: Globe_001
     4300000: Cube
     4300002: CornerShelf
     4300004: Freezer
@@ -140,6 +148,8 @@ ModelImporter:
     4300048: BathSink
     4300050: BathroomMirror
     4300052: Bathtub
+    4300054: Globe_001
+    4300056: Globe
     7400000: Default Take
     9500000: //RootNode
   materials:
