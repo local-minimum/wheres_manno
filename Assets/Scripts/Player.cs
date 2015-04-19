@@ -78,7 +78,7 @@ public class Player : MonoBehaviour {
 		bool hasPlayedSound = false;
 		AudioSource soundPlayer = GetComponentInChildren<AudioSource>();
 
-		for (float p=0; p<4f;p+=0.03f) {
+		for (float p=0; p<4f;p+=0.01f) {
 			iTween.PutOnPath(gameObject, pathToMoon, Mathf.Clamp01(p));
 			if (p>1.2f && !hasPlayedSound) {
 				soundPlayer.PlayOneShot(story.HuggingMoonClip);
