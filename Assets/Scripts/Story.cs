@@ -17,6 +17,7 @@ public class Story : MonoBehaviour {
 
     public AudioClip GiveUpClip;
 	public AudioClip HuggingMoonClip;
+	public AudioClip ImposterClip;
 
 	public event PlayerSleep OnPlayerSleep;
 	public event PlayerSleep OnPlayerWakeUp;

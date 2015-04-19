@@ -34,7 +34,7 @@ public class Imposter : MonoBehaviour {
 		if (sleepType == SleepTypes.FoundImposter)
 			active = Imposter.story.PlayIteration == activeIteration;
 		else if (active)
-			active = sleepType == SleepTypes.GaveUp || sleepType == SleepTypes.GotTired;
+			active = sleepType == SleepTypes.GaveUp;
 
 		imposterLight.enabled = active;
 	}
@@ -66,6 +66,7 @@ public class Imposter : MonoBehaviour {
 
 	void CallOut() {
 		player.PlayOneShot(story.ImposterVocalisation);
+		lastCallOutTime = Time.timeSinceLevelLoad;
 	}
 
 	bool IsCallOutTime {

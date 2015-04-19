@@ -49,6 +49,8 @@ public class Health : MonoBehaviour {
 		sleeping = true;
 		if (sleepType == SleepTypes.FoundTarget || sleepType == SleepTypes.GotTired)
 			Sleep();
+		else if (sleepType == SleepTypes.FoundTarget)
+			StartCoroutine(Fade(intensity, 0, 0.1f));
 	}
 	
 	void HandlePlayerWakeUp(SleepTypes sleepType) {
@@ -126,13 +128,18 @@ public class Health : MonoBehaviour {
 		Ailment.Intensity = 1 - health / fullHealth;
 	}
 
+	float intensity {
+		get {
+			return 1 - health / fullHealth;
+		}
+	}
+
 	public void FadeOut(float duration) {
-		float intensity = 1 - health / fullHealth;
+		
 		StartCoroutine(Fade(intensity, 1, duration));
 	}
 
 	public void FadeIn(float duration) {
-		float intensity = 1 - health / fullHealth;
 		StartCoroutine(Fade(1, intensity, duration));
 	}
 

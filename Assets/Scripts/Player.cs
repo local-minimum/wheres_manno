@@ -25,6 +25,8 @@ public class Player : MonoBehaviour {
 
 	Rigidbody playerBody;
 	Collider playerCollider;
+	AudioSource soundPlayer;
+	[SerializeField] AudioClip bashClip;
 
 	public float velocity {
 		get {
@@ -39,6 +41,7 @@ public class Player : MonoBehaviour {
 		health = GetComponent<Health>();
 		playerBody = GetComponent<Rigidbody>();
 		playerCollider = GetComponent<Collider>();
+		soundPlayer = GetComponentInChildren<AudioSource>();
 	}
 
 	// Use this for initialization
@@ -84,7 +87,6 @@ public class Player : MonoBehaviour {
 		playerCollider.isTrigger = true;
 		eventsAnimator.SetTrigger(winTrigger);
 		bool hasPlayedSound = false;
-		AudioSource soundPlayer = GetComponentInChildren<AudioSource>();
 
 		for (float p=0; p<4f;p+=0.01f) {
 			iTween.PutOnPath(gameObject, pathToMoon, Mathf.Clamp01(p));
@@ -99,7 +101,6 @@ public class Player : MonoBehaviour {
 	}
 
 	IEnumerator<WaitForSeconds> Fail() {
-		AudioSource soundPlayer = GetComponentInChildren<AudioSource>();
 		soundPlayer.PlayOneShot(story.GiveUpClip);
 		while (soundPlayer.isPlaying)
 			yield return new WaitForSeconds(0.1f);
@@ -109,9 +110,17 @@ public class Player : MonoBehaviour {
 
 	void HandleBash() {
 		eventsAnimator.SetTrigger(bashTrigger);
+		StartCoroutine(BashSound());
+	}
+
+	IEnumerator<WaitForSeconds> BashSound() {
+		yield return new WaitForSeconds(0.1f);
+		soundPlayer.PlayOneShot(bashClip);
 	}
 	
 	IEnumerator<WaitForSeconds> SleepCycle(SleepTypes sleepType) {
+		if (sleepType == SleepTypes.FoundImposter)
+			soundPlayer.PlayOneShot(story.ImposterClip);
 		health.FadeOut(0.4f);
 		yield return new WaitForSeconds(1f);
 		transform.localPosition = startPosition;
