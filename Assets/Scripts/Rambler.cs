@@ -4,11 +4,12 @@ using System.Collections;
 public class Rambler : MonoBehaviour {
 
 	[SerializeField] float timeBetweenRambles = 2f;
-	[Range(0, 1)][SerializeField] float timeBetweenVariability = 0.1f;
+	[Range(0, 1)][SerializeField] float timeBetweenVariability = 0.9f;
 	AudioSource player;
 	float nextRamble;
 	Story story;
 	bool touching = false;
+	[SerializeField][Range(0,1)] float volume = 0.5f;
 
 	// Use this for initialization
 	void Start () {
@@ -32,8 +33,7 @@ public class Rambler : MonoBehaviour {
 	}
 
 	void Ramble() {
-		player.PlayOneShot(story.NextRambling);
-		Debug.Log("Ramble");
+		player.PlayOneShot(story.NextRambling, volume);
 		SetNextRambleTime();
 	}
 

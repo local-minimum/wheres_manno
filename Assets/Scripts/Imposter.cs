@@ -8,8 +8,8 @@ public class Imposter : MonoBehaviour {
 	[SerializeField] float lightFlashingFrequency;
 	[SerializeField] float callOutSpacing;
 
-
-	AudioSource player;
+	Player player;
+	AudioSource soundPlayer;
 	bool active = false;
 	
 	float imposterLightMaxIntensity;
@@ -42,13 +42,14 @@ public class Imposter : MonoBehaviour {
 	void Awake() {
 		if (Imposter.story == null)
 			Imposter.story = GameObject.FindObjectOfType<Story>();
+		player = GameObject.FindObjectOfType<Player>();
 	}
 
 	void Start () {
 
 
 		active = Imposter.story.PlayIteration == activeIteration;
-		player = GetComponent<AudioSource>();
+		soundPlayer = GetComponent<AudioSource>();
 		imposterLight = GetComponent<Light>();
 		imposterLightMaxIntensity = imposterLight.intensity;
 	}
@@ -65,13 +66,19 @@ public class Imposter : MonoBehaviour {
 	}
 
 	void CallOut() {
-		player.PlayOneShot(story.ImposterVocalisation);
+		soundPlayer.PlayOneShot(story.ImposterVocalisation, vocalizationVolume);
 		lastCallOutTime = Time.timeSinceLevelLoad;
+	}
+
+	float vocalizationVolume {
+		get {
+			return Mathf.Clamp01(player.GetDistance(gameObject) / soundPlayer.maxDistance);
+		}
 	}
 
 	bool IsCallOutTime {
 		get {
-			return !player.isPlaying && Time.timeSinceLevelLoad - lastCallOutTime > callOutSpacing;
+			return !soundPlayer.isPlaying && Time.timeSinceLevelLoad - lastCallOutTime > callOutSpacing;
 		}
 	}
 

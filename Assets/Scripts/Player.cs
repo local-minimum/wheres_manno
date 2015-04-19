@@ -133,4 +133,8 @@ public class Player : MonoBehaviour {
 		fpsController.enabled = sleepType == SleepTypes.GotTired || sleepType == SleepTypes.FoundImposter;
 		headBob.enabled = fpsController.enabled;
 	}
+
+	public float GetDistance(GameObject other) {
+		return Vector3.Distance(transform.position, other.transform.position);
+	}
 }

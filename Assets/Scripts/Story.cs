@@ -11,7 +11,7 @@ public class Story : MonoBehaviour {
 	[SerializeField] int playIteration = 0;
 	[SerializeField] AudioClip[] imposterVocalisations;
 	[SerializeField] AudioClip[] ramblings;
-	int rambling = -1;
+	int mannoIndex = -1;
 	int sleepCycles = 0;
 	[SerializeField] int maxSleepCycles = 10;
 
@@ -38,7 +38,11 @@ public class Story : MonoBehaviour {
 		get {
 			if (imposterVocalisations.Length == 0)
 				return null;
-			return imposterVocalisations[Random.Range(0, imposterVocalisations.Length)];
+
+			mannoIndex ++;
+			mannoIndex %= imposterVocalisations.Length;
+
+			return imposterVocalisations[mannoIndex];
 		}
 	}
 
@@ -46,10 +50,8 @@ public class Story : MonoBehaviour {
 		get {
 			if (ramblings.Length == 0)
 				return null;
-			rambling ++;
-			rambling %= ramblings.Length;
 
-			return ramblings[rambling];
+			return ramblings[Random.Range(0, ramblings.Length)];
 		}
 	}
 
