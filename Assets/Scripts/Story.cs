@@ -57,7 +57,7 @@ public class Story : MonoBehaviour {
 
 	public void Sleep() {
 		sleepCycles++;
-		if (sleepCycles > maxSleepCycles)
+		if (sleepCycles - playIteration > maxSleepCycles)
 			GiveUp();
 		else if (OnPlayerSleep != null)
 			OnPlayerSleep(SleepTypes.GotTired);
