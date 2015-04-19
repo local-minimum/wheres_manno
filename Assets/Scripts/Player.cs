@@ -90,7 +90,7 @@ public class Player : MonoBehaviour {
 
 		for (float p=0; p<4f;p+=0.01f) {
 			iTween.PutOnPath(gameObject, pathToMoon, Mathf.Clamp01(p));
-			if (p>1.2f && !hasPlayedSound) {
+			if (p>0.5f && !hasPlayedSound) {
 				soundPlayer.PlayOneShot(story.HuggingMoonClip);
 				hasPlayedSound = true;
 			}
