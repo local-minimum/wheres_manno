@@ -16,6 +16,9 @@ public class Player : MonoBehaviour {
 	[SerializeField] Transform[] pathToMoon;
 	[SerializeField] TextMesh moonText;
 
+	[SerializeField] float rotationTime = 0.4f;
+	[SerializeField] float rotationDelayTime = 0.2f;
+
 	public event Bash OnBash;
 	RigidbodyFirstPersonController fpsController;
 	HeadBob headBob;
@@ -45,12 +48,38 @@ public class Player : MonoBehaviour {
 		soundPlayer = GetComponentInChildren<AudioSource>();
 	}
 
+	bool allowPlayerControl {
+		get {
+			return fpsController.enabled && headBob.enabled;
+		}
+
+		set {
+			fpsController.enabled = value;
+			headBob.enabled = value;
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 		startPosition = transform.localPosition;
 		startRotation = transform.localRotation;
 		startScale = transform.localScale;
 		Cursor.visible = false;
+	}
+
+	void OnImposterCall(Imposter imposter) {
+		allowPlayerControl = false;
+		iTween.LookTo(gameObject, iTween.Hash("looktarget", imposter.transform,
+		                                      "time", rotationTime,
+		                                      "delay", rotationDelayTime,
+		                                      "easetype", iTween.EaseType.easeOutExpo,
+		                                      "oncompletetarget", gameObject,
+		                                      "oncomplete", "OnFacingImposter"));
+	}
+
+	
+	void OnFacingImposter() {
+				allowPlayerControl = true;
 	}
 
 	void Update() {
@@ -74,8 +103,7 @@ public class Player : MonoBehaviour {
 	}
 
 	void HandleSleep(SleepTypes sleepType) {
-		fpsController.enabled = false;
-		headBob.enabled = false;
+		allowPlayerControl = false;
 		if (sleepType == SleepTypes.FoundImposter || sleepType == SleepTypes.GotTired)
 			StartCoroutine( SleepCycle(sleepType));
 		else if (sleepType == SleepTypes.FoundTarget)

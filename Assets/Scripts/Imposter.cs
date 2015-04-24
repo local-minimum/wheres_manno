@@ -8,6 +8,8 @@ public class Imposter : MonoBehaviour {
 	[SerializeField] float lightFlashingFrequency;
 	[SerializeField] float callOutSpacing;
 
+	static public Imposter current;
+
 	Player player;
 	AudioSource soundPlayer;
 	bool active = false;
@@ -36,6 +38,8 @@ public class Imposter : MonoBehaviour {
 		else if (active)
 			active = sleepType == SleepTypes.GaveUp;
 
+		if (active)
+			Imposter.current = this;
 		imposterLight.enabled = active;
 	}
 
@@ -67,6 +71,7 @@ public class Imposter : MonoBehaviour {
 
 	void CallOut() {
 		soundPlayer.PlayOneShot(story.ImposterVocalisation, vocalizationVolume);
+		player.BroadcastMessage("OnImposterCall", this, SendMessageOptions.DontRequireReceiver);
 		lastCallOutTime = Time.timeSinceLevelLoad;
 	}
 
