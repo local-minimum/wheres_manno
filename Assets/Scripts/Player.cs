@@ -68,13 +68,13 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnImposterCall(Imposter imposter) {
-		allowPlayerControl = false;
-		iTween.LookTo(gameObject, iTween.Hash("looktarget", imposter.transform,
-		                                      "time", rotationTime,
-		                                      "delay", rotationDelayTime,
-		                                      "easetype", iTween.EaseType.easeOutExpo,
-		                                      "oncompletetarget", gameObject,
-		                                      "oncomplete", "OnFacingImposter"));
+//		allowPlayerControl = false;
+//		iTween.LookTo(gameObject, iTween.Hash("looktarget", imposter.transform,
+//		                                      "time", rotationTime,
+//		                                      "delay", rotationDelayTime,
+//		                                      "easetype", iTween.EaseType.easeOutExpo,
+//		                                      "oncompletetarget", gameObject,
+//		                                      "oncomplete", "OnFacingImposter"));
 	}
 
 	
@@ -104,9 +104,12 @@ public class Player : MonoBehaviour {
 
 	void HandleSleep(SleepTypes sleepType) {
 		allowPlayerControl = false;
-		if (sleepType == SleepTypes.FoundImposter || sleepType == SleepTypes.GotTired)
+		if (sleepType == SleepTypes.GotTired)
 			StartCoroutine( SleepCycle(sleepType));
-		else if (sleepType == SleepTypes.FoundTarget)
+		else if (sleepType == SleepTypes.FoundImposter) {
+			soundPlayer.PlayOneShot(story.ImposterClip);
+			story.AwakePlayer(sleepType);
+		} else if (sleepType == SleepTypes.FoundTarget)
 			StartCoroutine(Win());
 		else if (sleepType == SleepTypes.GaveUp)
 			StartCoroutine(Fail());
@@ -154,8 +157,6 @@ public class Player : MonoBehaviour {
 	}
 	
 	IEnumerator<WaitForSeconds> SleepCycle(SleepTypes sleepType) {
-		if (sleepType == SleepTypes.FoundImposter)
-			soundPlayer.PlayOneShot(story.ImposterClip);
 		health.FadeOut(0.4f);
 		yield return new WaitForSeconds(1f);
 		transform.localPosition = startPosition;
@@ -165,8 +166,8 @@ public class Player : MonoBehaviour {
 	}
 
 	void HandleAwake(SleepTypes sleepType) {
-		fpsController.enabled = sleepType == SleepTypes.GotTired || sleepType == SleepTypes.FoundImposter;
-		headBob.enabled = fpsController.enabled;
+		if (sleepType == SleepTypes.GotTired || sleepType == SleepTypes.FoundImposter)
+			allowPlayerControl = true;
 	}
 
 	public float GetDistance(GameObject other) {

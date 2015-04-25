@@ -16,6 +16,7 @@ public class Health : MonoBehaviour {
 	[SerializeField] float baseBeatFreq = 1.2f;
 	[SerializeField] float intensityFactor = 0.5f;
 	[SerializeField] GameObject beatHead;
+	[SerializeField] float ImposterDeterioration;
 
 	AudioSource soundPlayer;
 	RigidbodyFirstPersonController fpsController;
@@ -54,8 +55,10 @@ public class Health : MonoBehaviour {
 
 	void HandleSleep(SleepTypes sleepType) {
 		sleeping = true;
-		if (sleepType == SleepTypes.FoundTarget || sleepType == SleepTypes.GotTired)
+		if (sleepType == SleepTypes.GotTired)
 			Sleep();
+		else if (sleepType == SleepTypes.FoundImposter)
+			deterioration += ImposterDeterioration;
 		else if (sleepType == SleepTypes.FoundTarget)
 			StartCoroutine(Fade(intensity, 0, 0.1f));
 	}
