@@ -76,15 +76,16 @@ public class Imposter : MonoBehaviour {
 
 	void CallOut() {
 		soundPlayer.PlayOneShot(story.ImposterVocalisation, vocalizationVolume);
+		Transform[] path = Checkpoint.GetPathFromTo(transform, player.transform);
 		iTween.MoveTo(visualCallEffect, iTween.Hash(
-			"path", Checkpoint.GetPathFromTo(transform, player.transform),
+			"path", path ,
 			"lookahead", pathLookAhead,
 			"speed", pathSpeed,
 			"delay", pathDelay,
 			"easetype", iTween.EaseType.easeInExpo,
 			"onstart", "OnGlowSphereStart",
 			"onstarttarget", visualCallEffect,
-			"onstartparams", transform,
+			"onstartparams", path,
 			"oncomplete", "OnGlowSphereEnd",
 			"oncompletetarget", visualCallEffect));
 		lastCallOutTime = Time.timeSinceLevelLoad;
