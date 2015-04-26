@@ -5,7 +5,7 @@ using System.Linq;
 [ExecuteInEditMode]
 public class Checkpoint : MonoBehaviour {
 
-	static float acuteIntermediaryThreshold = 60f;
+	static float acuteIntermediaryThreshold = 100f;
 	static HashSet<Checkpoint> nodes = new HashSet<Checkpoint>();
 
 	[SerializeField] float autoDiscoverRadius = 2f;
