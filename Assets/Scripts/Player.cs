@@ -16,9 +16,6 @@ public class Player : MonoBehaviour {
 	[SerializeField] Transform[] pathToMoon;
 	[SerializeField] TextMesh moonText;
 
-	[SerializeField] float rotationTime = 0.4f;
-	[SerializeField] float rotationDelayTime = 0.2f;
-
 	public event Bash OnBash;
 	RigidbodyFirstPersonController fpsController;
 	HeadBob headBob;
@@ -65,21 +62,7 @@ public class Player : MonoBehaviour {
 		startRotation = transform.localRotation;
 		startScale = transform.localScale;
 		Cursor.visible = false;
-	}
-
-	void OnImposterCall(Imposter imposter) {
-//		allowPlayerControl = false;
-//		iTween.LookTo(gameObject, iTween.Hash("looktarget", imposter.transform,
-//		                                      "time", rotationTime,
-//		                                      "delay", rotationDelayTime,
-//		                                      "easetype", iTween.EaseType.easeOutExpo,
-//		                                      "oncompletetarget", gameObject,
-//		                                      "oncomplete", "OnFacingImposter"));
-	}
-
-	
-	void OnFacingImposter() {
-				allowPlayerControl = true;
+		Cursor.lockState = CursorLockMode.Locked;
 	}
 
 	void Update() {
@@ -140,8 +123,6 @@ public class Player : MonoBehaviour {
 
 	IEnumerator<WaitForSeconds> Fail() {
 		soundPlayer.PlayOneShot(story.GiveUpClip);
-		while (soundPlayer.isPlaying)
-			yield return new WaitForSeconds(0.1f);
 		yield return new WaitForSeconds(5f);
 		Application.LoadLevel(menuSceneName);
 	}

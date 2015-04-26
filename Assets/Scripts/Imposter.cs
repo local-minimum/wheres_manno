@@ -38,7 +38,7 @@ public class Imposter : MonoBehaviour {
 	}
 
 	void HandleSleep(SleepTypes sleepType) {
-		if (sleepType == SleepTypes.FoundImposter)
+		if (sleepType == SleepTypes.FoundImposter || sleepType == SleepTypes.GotTired)
 			active = Imposter.story.PlayIteration == activeIteration;
 		else if (active)
 			active = sleepType == SleepTypes.GaveUp;

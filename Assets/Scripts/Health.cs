@@ -21,8 +21,7 @@ public class Health : MonoBehaviour {
 	AudioSource soundPlayer;
 	RigidbodyFirstPersonController fpsController;
 	Story story;
-
-	Ailment[] ailments;
+	
 	float health;
 	float deterioration;
 	float nextStep;
@@ -34,7 +33,6 @@ public class Health : MonoBehaviour {
 	}
 
 	void Start() {
-		ailments = GetComponentsInChildren<Ailment>();
 		fpsController = GetComponentInChildren<RigidbodyFirstPersonController>();
 		soundPlayer = GetComponent<AudioSource>();
 		StartCoroutine(KeepTheBeat());
