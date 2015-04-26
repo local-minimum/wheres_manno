@@ -8,6 +8,11 @@ public class Imposter : MonoBehaviour {
 	[SerializeField] float lightFlashingFrequency;
 	[SerializeField] float callOutSpacing;
 
+	[SerializeField] GameObject visualCallEffect;
+	[SerializeField][Range(0, 1)] float pathLookAhead = 0.4f;
+	[SerializeField] float pathDelay = 0.4f;
+	[SerializeField] float pathSpeed = 5f;
+
 	static public Imposter current;
 
 	Player player;
@@ -71,7 +76,16 @@ public class Imposter : MonoBehaviour {
 
 	void CallOut() {
 		soundPlayer.PlayOneShot(story.ImposterVocalisation, vocalizationVolume);
-		player.BroadcastMessage("OnImposterCall", this, SendMessageOptions.DontRequireReceiver);
+		iTween.MoveTo(visualCallEffect, iTween.Hash(
+			"path", Checkpoint.GetPathFromTo(transform, player.transform),
+			"lookahead", pathLookAhead,
+			"speed", pathSpeed,
+			"delay", pathDelay,
+			"onstart", "OnGlowSphereStart",
+			"onstarttarget", visualCallEffect,
+			"onstartparams", transform,
+			"oncomplete", "OnGlowSphereEnd",
+			"oncompletetarget", visualCallEffect));
 		lastCallOutTime = Time.timeSinceLevelLoad;
 	}
 
