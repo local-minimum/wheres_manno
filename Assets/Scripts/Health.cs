@@ -15,6 +15,8 @@ public class Health : MonoBehaviour {
 	[SerializeField] AudioClip BeatA;
 	[SerializeField] float baseBeatFreq = 1.2f;
 	[SerializeField] float intensityFactor = 0.5f;
+	[SerializeField] float beatStrength = 0.1f;
+	[SerializeField] float beatDuration = 0.2f;
 	[SerializeField] GameObject beatHead;
 	[SerializeField] float ImposterDeterioration;
 
@@ -167,7 +169,7 @@ public class Health : MonoBehaviour {
 			yield return new WaitForSeconds(baseBeatFreq - intensityFactor * intensity);
 			soundPlayer.PlayOneShot(BeatA);
 			if (!sleeping)
-				iTween.ShakePosition(beatHead, Vector3.down * 0.5f, 0.2f);
+				iTween.ShakePosition(beatHead, Vector3.down * beatStrength, beatDuration);
 		}
 	}
 }

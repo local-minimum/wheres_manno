@@ -7,7 +7,7 @@ public class DizzyEffect : MonoBehaviour {
 	[SerializeField] float dizzyDuration;
 	[SerializeField] float delay;
 
-	MeshRenderer meshRenderer;
+	MeshRenderer[] meshRenderers;
 	bool dizzy = false;
 	float angle;
 	float spinDelta = 0.03f;
@@ -15,8 +15,15 @@ public class DizzyEffect : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		meshRenderer = GetComponent<MeshRenderer>();
-		meshRenderer.enabled = false;
+		meshRenderers = GetComponentsInChildren<MeshRenderer>();
+		renderMesh = false;
+	}
+
+	bool renderMesh {
+		set {
+			foreach (MeshRenderer meshRenderer in meshRenderers)
+				meshRenderer.enabled = value;
+		}
 	}
 
 	void OnEnable() {
@@ -41,13 +48,13 @@ public class DizzyEffect : MonoBehaviour {
 		dizzy = true;
 		spinUntilTime = Time.timeSinceLevelLoad + dizzyDuration + delay;
 		yield return new WaitForSeconds(delay);
-		meshRenderer.enabled = true;
+		renderMesh = true;
 		while (Time.timeSinceLevelLoad < spinUntilTime) {
 			angle += dizzySpeed * spinDelta;
 			transform.Rotate(Vector3.forward, dizzySpeed * spinDelta, Space.Self);
 			yield return new WaitForSeconds(spinDelta);
 		}
 		dizzy = false;
-		meshRenderer.enabled = false;
+		renderMesh = false;
 	}
 }
