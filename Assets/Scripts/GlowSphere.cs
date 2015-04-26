@@ -1,26 +1,31 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class GlowSphere : MonoBehaviour {
 
 	ParticleSystem emitter;
 	Transform[] path = new Transform[]{};
 	AudioSource soundSystem;
+	MeshRenderer meshRenderer;
 
 	void Awake() {
 		emitter = GetComponent<ParticleSystem>();
 		soundSystem = GetComponent<AudioSource>();
+		meshRenderer = GetComponent<MeshRenderer>();
+		OnGlowSphereEnd();
 	}
 
 	void OnGlowSphereStart(Transform[] path) {
 		this.path = path;
 		transform.position = path[0].position;
+		meshRenderer.enabled = true;
 		emitter.enableEmission = true;
 		soundSystem.Play();
 	}
 
 	void OnGlowSphereEnd() {
 		emitter.enableEmission = false;
+		meshRenderer.enabled = false;
 		soundSystem.Stop();
 	}
 

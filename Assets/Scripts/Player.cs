@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
 	[SerializeField] string bashTrigger;
 	[SerializeField] string winTrigger;
 	[SerializeField] string menuSceneName;
+	[SerializeField] Transform moon;
 
 	Story story;
 	Health health;
@@ -114,7 +115,7 @@ public class Player : MonoBehaviour {
 			} else if (p>0.5f) {
 				moonText.offsetZ = Mathf.Lerp(-30, 0, p/4);
 			}
-			cam.transform.LookAt(pathToMoon[pathToMoon.Length - 1]);
+			cam.transform.LookAt(moon);
 			yield return new WaitForSeconds(0.03f);
 		}
 		yield return new WaitForSeconds(5f);
