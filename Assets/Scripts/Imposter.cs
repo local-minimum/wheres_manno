@@ -81,6 +81,7 @@ public class Imposter : MonoBehaviour {
 			"lookahead", pathLookAhead,
 			"speed", pathSpeed,
 			"delay", pathDelay,
+			"easetype", iTween.EaseType.easeInExpo,
 			"onstart", "OnGlowSphereStart",
 			"onstarttarget", visualCallEffect,
 			"onstartparams", transform,

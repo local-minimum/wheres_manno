@@ -67,8 +67,6 @@ public class Checkpoint : MonoBehaviour {
 				return new Transform[] {source, entry.transform, sink};
 		} else {
 			List<Transform> path = ShortestPath(entry, exit);
-			foreach (Transform t in path)
-				Debug.Log(t.name);
 			return AddSouceAndSinkToPath(path, source, sink).ToArray();
 		}
 	}
@@ -99,7 +97,7 @@ public class Checkpoint : MonoBehaviour {
 		} else {
 			foreach (Checkpoint edge in edges) {
 				if (!path.Contains(edge)) {
-					paths.AddRange(edge.ExtendPath(path, target));
+					paths.AddRange(edge.ExtendPath(path.ToList(), target));
 				}
 			}
 		}
