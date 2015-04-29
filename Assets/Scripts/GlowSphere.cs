@@ -6,11 +6,13 @@ public class GlowSphere : MonoBehaviour {
 	ParticleSystem emitter;
 	Transform[] path = new Transform[]{};
 	AudioSource soundSystem;
+	TrailRenderer trailRenderer;
 	MeshRenderer meshRenderer;
 
 	void Awake() {
 		emitter = GetComponent<ParticleSystem>();
 		soundSystem = GetComponent<AudioSource>();
+		trailRenderer = GetComponent<TrailRenderer>();
 		meshRenderer = GetComponent<MeshRenderer>();
 		OnGlowSphereEnd();
 	}
@@ -18,6 +20,7 @@ public class GlowSphere : MonoBehaviour {
 	void OnGlowSphereStart(Transform[] path) {
 		this.path = path;
 		transform.position = path[0].position;
+		trailRenderer.enabled = true;
 		meshRenderer.enabled = true;
 		emitter.enableEmission = true;
 		soundSystem.Play();
@@ -25,6 +28,7 @@ public class GlowSphere : MonoBehaviour {
 
 	void OnGlowSphereEnd() {
 		emitter.enableEmission = false;
+		trailRenderer.enabled = false;
 		meshRenderer.enabled = false;
 		soundSystem.Stop();
 	}

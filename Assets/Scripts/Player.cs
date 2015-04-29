@@ -102,21 +102,22 @@ public class Player : MonoBehaviour {
 	IEnumerator<WaitForSeconds> Win() {
 		playerBody.isKinematic = true;
 		playerCollider.isTrigger = true;
-		eventsAnimator.SetTrigger(winTrigger);
 		bool hasPlayedSound = false;
-		Camera cam = headBob.GetComponentInChildren<Camera>();
-
+		float stepDuration = 0.03f;
 		for (float p=0; p<4f;p+=0.01f) {
-			iTween.PutOnPath(gameObject, pathToMoon, Mathf.Clamp01(p));
+			iTween.MoveUpdate(gameObject, iTween.Hash(
+				"position", iTween.PointOnPath(pathToMoon, Mathf.Clamp01(p)),
+				"looktarget", moon,
+				"time", stepDuration));
 			if (p>0.5f && !hasPlayedSound) {
 				soundPlayer.PlayOneShot(story.HuggingMoonClip);
+				eventsAnimator.SetTrigger(winTrigger);
 				moonText.gameObject.SetActive(true);
 				hasPlayedSound = true;
 			} else if (p>0.5f) {
 				moonText.offsetZ = Mathf.Lerp(-30, 0, p/4);
 			}
-			cam.transform.LookAt(moon);
-			yield return new WaitForSeconds(0.03f);
+			yield return new WaitForSeconds(stepDuration);
 		}
 		yield return new WaitForSeconds(5f);
 		Application.LoadLevel(menuSceneName);

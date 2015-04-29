@@ -22,6 +22,8 @@ public class Imposter : MonoBehaviour {
 	float imposterLightMaxIntensity;
 	float lastCallOutTime;
 	Light imposterLight;
+	float lastCallOutLight;
+	[SerializeField] float timeBetweenCallVisualTrail = 15f;
 
 	public int ActiveIteration {
 		get {
@@ -43,9 +45,13 @@ public class Imposter : MonoBehaviour {
 		else if (active)
 			active = sleepType == SleepTypes.GaveUp;
 
-		if (active)
+		if (active) {
 			Imposter.current = this;
+			lastCallOutLight = Time.timeSinceLevelLoad;
+			lastCallOutTime = lastCallOutLight;
+		}
 		imposterLight.enabled = active;
+
 	}
 
 	void Awake() {
@@ -77,17 +83,20 @@ public class Imposter : MonoBehaviour {
 	void CallOut() {
 		soundPlayer.PlayOneShot(story.ImposterVocalisation, vocalizationVolume);
 		Transform[] path = Checkpoint.GetPathFromTo(transform, player.transform);
-		iTween.MoveTo(visualCallEffect, iTween.Hash(
-			"path", path ,
-			"lookahead", pathLookAhead,
-			"speed", pathSpeed,
-			"delay", pathDelay,
-			"easetype", iTween.EaseType.easeInExpo,
-			"onstart", "OnGlowSphereStart",
-			"onstarttarget", visualCallEffect,
-			"onstartparams", path,
-			"oncomplete", "OnGlowSphereEnd",
-			"oncompletetarget", visualCallEffect));
+		if (Time.timeSinceLevelLoad - lastCallOutLight > timeBetweenCallVisualTrail) {
+			lastCallOutLight = Time.timeSinceLevelLoad;
+			iTween.MoveTo(visualCallEffect, iTween.Hash(
+				"path", path ,
+				"lookahead", pathLookAhead,
+				"speed", pathSpeed,
+				"delay", pathDelay,
+				"easetype", iTween.EaseType.easeInExpo,
+				"onstart", "OnGlowSphereStart",
+				"onstarttarget", visualCallEffect,
+				"onstartparams", path,
+				"oncomplete", "OnGlowSphereEnd",
+				"oncompletetarget", visualCallEffect));
+		}
 		lastCallOutTime = Time.timeSinceLevelLoad;
 	}
 
